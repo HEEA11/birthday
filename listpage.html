@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ 나만의 생일 매뉴얼</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Noto+Sans+KR:wght@100..900&family=Poor+Story&display=swap" rel="stylesheet">
+</head>
+
+    <style>
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box; 
+}
+        /* ---------------------------------------------------- */
+        /* 기본 스타일 및 웜톤 설정 */
+        /* ---------------------------------------------------- */
+        body {
+
+            font-family: 'Gowun Dodum', sans-serif;
+            background-color: #FBF9F6;
+            color: #4A4A4A;
+         
+            line-height: 1.6;
+            padding: 40px 20px;
+            margin: 0;
+            text-align: center;
+            font-size: 0.9em; 
+            overflow-x: hidden;
+   
+        }
+
+
+
+        
+
+        .page-title {
+
+            font-size: 2.0em; 
+            color: #D29761;
+            margin-bottom: 5px;
+            font-family: 'Gowun Dodum', sans-serif;
+        }
+
+        .page-subtitle {
+            font-size: 1.0em; 
+            color: #6C6C6C;
+            margin-bottom: 40px;
+            font-family: 'Gowun Dodum', sans-serif;
+        }
+
+        /* ---------------------------------------------------- */
+        /* 질문 및 입력 폼 스타일 */
+        /* ---------------------------------------------------- */
+        .question-list {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .question-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #E5E5E5;
+        }
+
+        .question-text {
+            flex-basis: 65%;
+            font-size: 0.8em; 
+            font-weight: 500;
+            padding-right: 20px;
+            line-height: 1.4;
+        }
+
+        .input-group {
+            flex-basis: 35%;
+            display: flex;
+            align-items: center;
+            min-width: 200px;
+            
+        }
+
+        .input-text {
+            flex-grow: 1;
+            min-width: 130px;
+            padding: 10px;
+            border: 1px solid #D2C4B0;
+            border-radius: 8px;
+            resize: vertical;
+        
+            font-size: 0.9em; 
+            color: #333;
+            background-color: #FEFEFA;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            overflow-y: hidden;
+            min-height: 20px;
+        }
+
+        .input-text:focus {
+            border-color: #dfbe78;
+            box-shadow: 0 0 5px rgba(223, 190, 120, 0.5);
+            outline: none;
+        }
+
+        /* 입력 버튼 스타일  */
+        .submit-btn {
+         
+            background-color: #EDE8E1; 
+
+            color: #4A4A4A; 
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: all 0.3s; 
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        
+        /* 입력 완료 (JS에 의해 disabled가 설정될 때) */
+        .submit-btn:disabled {
+             /* 👇 수정: 완료 상태를 따뜻한 골드/베이지 톤으로 변경 */
+            background-color: #dfbe78; 
+            color: white; /* 흰색 글자로 대비 강조 */
+            cursor: default;
+        }
+
+        /* ---------------------------------------------------- */
+        /* 결과 매뉴얼 스타일 */
+        /* ---------------------------------------------------- */
+        #resultContainer {
+            margin-top: 60px;
+            padding: 40px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            text-align: left;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #resultContainer.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 매뉴얼 본문 스타일 */
+        .manual-heading {
+            font-family: 'EB Garamond', serif;
+            color: #D29761;
+            font-size: 2em;
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .manual-date {
+            font-size: 1.0em;
+            color: #6C6C6C;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            font-size: 1.35em;
+            color: #5A5A5A;
+            margin-top: 35px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .intro-paragraph {
+            font-size: 1.0em;
+            margin-bottom: 15px;
+        }
+        
+        .action-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .action-list li {
+            font-size: 1.0em;
+            margin-bottom: 12px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .action-list li::before {
+            content: '•';
+            color: #C6748A;
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        strong {
+            color: #C6748A;
+            font-weight: 700;
+        }
+        
+        .final-quote {
+            border-left: 3px solid #dfbe78;
+            padding: 15px 0 15px 20px;
+            margin: 40px 0;
+            background-color: #F8F5EE;
+            border-radius: 0 8px 8px 0;
+            text-align: center;
+        }
+
+        .final-quote p {
+            font-style: italic;
+            font-size: 1.05em;
+            color: #6C6C6C;
+            margin: 5px 0;
+            text-align: center;
+        }
+        
+        .congratulations {
+            font-weight: 700;
+            color: #D29761;
+            font-size: 1.1em;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .suffix {
+            font-size: 0.8em;
+            min-width: 30px;
+
+        }
+
+        #downloadManualBtn {
+    /* 기본 모양 및 크기 */
+    display: inline-block;
+    padding: 15px 40px; /* 내부 여백 */
+    border: none;
+    border-radius: 30px; /* 부드러운 알약 모양 */
+    cursor: pointer;
+    transition: all 0.3s ease; /* 모든 변화에 부드러운 애니메이션 적용 */
+
+    /* 색상 및 배경 (따뜻한 골드 톤으로 강조) */
+    background-color: #D29761; /* 따뜻하고 부드러운 골드/베이지 */
+    color: #FFFFFF; /* 밝은 흰색 글씨 */
+    
+    /* 폰트 스타일 */
+    font-size: 1.1em;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    
+    /* 은은한 그림자 */
+    box-shadow: 0 5px 15px rgba(210, 151, 97, 0.4); 
+}
+
+/* 마우스 오버(Hover) 효과 */
+#downloadManualBtn:hover {
+    background-color: #B58455; /* 좀 더 깊은 베이지 톤 */
+    box-shadow: 0 8px 20px rgba(181, 132, 85, 0.6); /* 그림자 강조 */
+    transform: translateY(-3px); /* 살짝 위로 띄우는 효과 */
+}
+
+/* 버튼 클릭 시 (Active) 효과 */
+#downloadManualBtn:active {
+    background-color: #A07550; /* 더 진한 색으로 즉각적인 반응 */
+    transform: translateY(0); /* 원래 위치로 돌아가면서 클릭감 부여 */
+    box-shadow: 0 2px 10px rgba(160, 117, 80, 0.5);
+}
+
+    </style>
+</head>
+<body>
+
+
+    <p class="page-subtitle">몇 가지 질문에 진솔하게 답해,<br> 당신만을 위한 가장 따뜻한 생일 매뉴얼을 완성해보세요.</p>
+
+    <form id="manualForm" class="question-list">
+        
+        <div class="question-item">
+            <span class="question-text">1. 나를 가장 잘 나타낼 수 있는 색이 있다면?</span>
+            <div class="input-group">
+                <textarea class="input-text" data-q="1" placeholder="예: 파랑, 퍼피레드" required></textarea>
+                <span class="suffix">색</span>
+                <button type="button" class="submit-btn">입력</button>
+            </div>
+        </div>
+
+        <div class="question-item">
+            <span class="question-text">2. 이 노래를 들었을 때 나는 가장 기분이 좋았던 것 같아.</span>
+            <div class="input-group">
+                <textarea class="input-text" data-q="2" placeholder="예: pocket locket" required></textarea>
+                <button type="button" class="submit-btn">입력</button>
+            </div>
+        </div>
+        
+        <div class="question-item">
+            <span class="question-text">3. 유독 속상한 날, 혼자 저녁식사를 해야한다면 난 이걸 먹을거야.</span>
+            <div class="input-group">
+                <textarea class="input-text" data-q="3" placeholder="예: 따뜻한 국밥" required></textarea>
+                <button type="button" class="submit-btn">입력</button>
+            </div>
+        </div>
+
+        <div class="question-item">
+            <span class="question-text">4. 오늘이 나의 마지막 날일 때, 이것만큼은 꼭 하고 싶어.</span>
+            <div class="input-group">
+                <textarea class="input-text" data-q="4" placeholder="예: 친구들에게 편지 작성" required></textarea>
+                <span class="suffix">하기</span>
+                <button type="button" class="submit-btn">입력</button>
+            </div>
+        </div>
+
+        <div class="question-item">
+            <span class="question-text">5. 10년전의 내 취미는…</span>
+            <div class="input-group">
+                <textarea class="input-text" data-q="5" placeholder="예: 게임" required></textarea>
+                <span class="suffix">하기</span>
+                <button type="button" class="submit-btn">입력</button>
+            </div>
+        </div>
+
+        <div class="question-item">
+            <span class="question-text">6. 지난 1년 동안 나를 가장 행복하게 해주었던 사람은?</span>
+            <div class="input-group">
+                <textarea class="input-text" data-q="6" placeholder="예: 부모님" required></textarea>
+                <button type="button" class="submit-btn">입력</button>
+            </div>
+        </div>
+
+        <div class="question-item">
+            <span class="question-text">7. 요즘 내 애착물건은..</span>
+            <div class="input-group">
+                <textarea class="input-text" data-q="7" placeholder="예: 오래된 담요" required></textarea>
+                <button type="button" class="submit-btn">입력</button>
+            </div>
+        </div>
+
+        <div class="question-item">
+            <span class="question-text">8. 요즘 집에서 주로 입고 있는 건.</span>
+            <div class="input-group">
+                <textarea class="input-text" data-q="8" placeholder="예: 흰색 파자마" required></textarea>
+                <button type="button" class="submit-btn">입력</button>
+            </div>
+        </div>
+        
+        <div class="question-item">
+            <span class="question-text">9. 앞으로의 인생에 있어서 이것만큼은 내가 절대 잊지 않았으면 좋겠어.</span>
+            <div class="input-group">
+                <textarea class="input-text" data-q="9" placeholder="예: '열심히 살면 뭐라도 된다'" required></textarea>
+                <button type="button" class="submit-btn">입력</button>
+            </div>
+        </div>
+
+        <div class="question-item">
+            <span class="question-text">10. 아, 예전에 이 영화도 재미있게 봤었던 거 같은데.</span>
+            <div class="input-group">
+                <textarea class="input-text" data-q="10" placeholder="예: 아바타" required></textarea>
+                <button type="button" class="submit-btn">입력</button>
+            </div>
+        </div>
+
+        <div class="question-item">
+            <span class="question-text">11. 내가 카페를 가면 항상 시키는게 있지.</span>
+            <div class="input-group">
+                <textarea class="input-text" data-q="11" placeholder="예: 아샷추" required></textarea>
+                <button type="button" class="submit-btn">입력</button>
+            </div>
+        </div>
+
+        <div class="question-item">
+            <span class="question-text">12. 집 가는 길에 보니까 여기 되게 마음에 들었어.</span>
+            <div class="input-group">
+                <textarea class="input-text" data-q="12" placeholder="예: 집 앞 놀이터" required></textarea>
+                <button type="button" class="submit-btn">입력</button>
+            </div>
+        </div>
+
+        <div class="question-item">
+            <span class="question-text">13. 가장 자주 들어가는 SNS는…</span>
+            <div class="input-group">
+                <textarea class="input-text" data-q="13" placeholder="예: 인스타그램" required></textarea>
+                <button type="button" class="submit-btn">입력</button>
+            </div>
+        </div>
+
+        <div class="question-item">
+            <span class="question-text">14. 자기 전 이런 습관이 있는 사람 참 멋있을 거 같아.</span>
+            <div class="input-group">
+                <textarea class="input-text" data-q="14" placeholder="예: 폰 안보고 취침" required></textarea>
+                <span class="suffix">하기</span>
+                <button type="button" class="submit-btn">입력</button>
+            </div>
+        </div>
+
+        <div class="question-item">
+            <span class="question-text">15. 10년 후의 나에게 해주고 싶은 말.</span>
+            <div class="input-group">
+                <textarea class="input-text" data-q="15" placeholder="예: '열심히 사는 것도 좋지만 그 속에서 의미를 찾았으면 좋겠어'" required></textarea>
+                <button type="button" class="submit-btn">입력</button>
+            </div>
+        </div>
+        
+        <div class="final-submit-area">
+             <button type="button" id="generateManualBtn" class="final-button" style="display: none;">매뉴얼 생성 중...</button>
+        </div>
+
+    </form>
+
+    <div id="resultContainer">
+        </div>
+
+        <div id="downloadArea" style="text-align: center; margin-top: 30px; opacity: 0; transition: opacity 1s;">
+            <button id="downloadManualBtn" class="final-button">
+                저장하기
+            </button>
+        </div>
+
+        <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="save.js"></script> 
+</body>
+</html>
