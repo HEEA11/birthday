@@ -59,12 +59,12 @@ function generateManualText(answers) {
         <footer class="manual-footer">
             <hr class="divider">
             <p class="intro-paragraph">생일의 마무리는 <strong data-answer="14">${a14}</strong> 하며 가장 근사하게 끝내보세요.</p>
-            <p class="intro-paragraph">10년 후의 당신이 해주는 위로, <strong data-answer="15">${a15}</strong>을 스스로에게 말하고,</p>
-            <p class="intro-paragraph">당신의 가장 중요한 가치인 <strong data-answer="9">${a9}</strong>을 되새기며,</p>
+            <p class="intro-paragraph">10년 후의 당신이 해주는 위로, <strong data-answer="15">${a15}</strong>을/를 스스로에게 말하고,</p>
+            <p class="intro-paragraph">당신의 가장 중요한 가치인 <strong data-answer="9">${a9}</strong>을/를 되새기며,</p>
 
             <blockquote class="final-quote">
-                <p>당신의 생일은 이 세상 무엇과도 바꿀 수 없이 <br> 완벽한 하루가 될 것입니다.</p>
-                <p>가장 가깝고, 가장 오래된 친구인 자기자신이 <br> 가장 축하해주는 생일일테니까요!</p>
+                <p>당신의 생일은 세상에서 가장 <br> 완벽한 하루가 될 것입니다.</p>
+                <p>제일 가깝고, 오래된 친구인 자기자신이 <br> 가장 축하해주는 생일일테니까요!</p>
                 <p class="congratulations">진정한 행복을 찾은 당신, <br> 생일 축하합니다.</p>
             </blockquote>
            
